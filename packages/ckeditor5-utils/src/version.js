@@ -146,10 +146,10 @@ if ( windowOrGlobal.CKEDITOR_VERSION ) {
 	 *
 	 * @error ckeditor-duplicated-modules
 	 */
-	throw new CKEditorError(
+	console.log( new CKEditorError(
 		'ckeditor-duplicated-modules',
 		null
-	);
+	) )
 } else {
 	windowOrGlobal.CKEDITOR_VERSION = version;
 }

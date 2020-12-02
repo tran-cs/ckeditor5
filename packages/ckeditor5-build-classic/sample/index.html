@@ -28,13 +28,45 @@
 
 <script src="../build/ckeditor.js"></script>
 <script>
-	ClassicEditor.create( document.querySelector( '#editor' ) )
+	ClassicEditor.create( document.querySelector( '#editor' ), {
+		mention: {
+			feeds: [
+				{
+					marker: '{',
+					feed: [
+						{id: '{{hint1}}', desc: 'The 1st hint'},
+						{id: '{{hint2}}', desc: 'Second hint'},
+					],
+					itemRenderer: mentionItemRenderer,
+				}
+			]
+		},
+		simpleUpload: {
+			uploadUrl: 'https://71645.cdn.cke-cs.com/',
+			headers: {
+				whoami: 'admin',
+				hello: 'there'
+			}
+		}
+	} )
 		.then( editor => {
 			window.editor = editor;
 		} )
 		.catch( error => {
 			console.error( 'There was a problem initializing the editor.', error );
 		} );
+
+	function mentionItemRenderer (item) {
+		const ul = document.createElement('ul'),
+			liDesc = document.createElement('li'),
+			liValue = document.createElement('li');
+		liDesc.classList.add('mention-item-desc');
+		liDesc.textContent = item.desc;
+		liValue.classList.add('mention-item-value');
+		liValue.textContent = item.id;
+		ul.appendChild(liDesc).appendChild(liValue);
+		return ul;
+	}
 </script>
 
 </body>
